@@ -13,14 +13,14 @@ export interface MediaData {
 
 export interface PostFormData {
     content: string;
-    username: String,
+    username: string,
     media?: MediaData | null;
 }
 
 type postDataType = {
-    owner: String;
-    content: String;
-    username: String,
+    owner: string;
+    content: string;
+    username: string,
     media?: PostFormData["media"];
 }
 

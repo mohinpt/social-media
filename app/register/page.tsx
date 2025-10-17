@@ -72,7 +72,7 @@ const Register = () => {
 
     return (
 
-        <Card className="w-full max-w-sm mx-auto">
+        <Card className="w-full max-w-sm mx-auto mt-20">
             <CardHeader>
                 <CardTitle>Register to create a new account</CardTitle>
             </CardHeader>

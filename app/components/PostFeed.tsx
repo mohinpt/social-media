@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { apiClient } from "@/lib/api-client";
 import { IPost } from "@/models/post";
 import { Post } from "./Post";
-import { useSession } from "next-auth/react";
 import { useSearch } from "@/context/SearchContext";
 
 export default function PostFeed() {
@@ -12,10 +11,6 @@ export default function PostFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { query } = useSearch()
-
-  const { data: session, status } = useSession()
-  const user = session?.user;
-
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -65,7 +60,7 @@ export default function PostFeed() {
       // When user searched but no results found
       return (
         <div className="text-center py-4 text-muted-foreground">
-          No posts or users found for "<span className="font-medium">{query}</span>"
+          No posts or users found for &quot;<span className="font-medium">{query}</span>&quot;
         </div>
       );
     } else {

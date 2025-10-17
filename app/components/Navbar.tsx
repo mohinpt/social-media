@@ -6,14 +6,14 @@ import { Input } from "./ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
-import { Search, Home, MessageCircle, Heart, PlusSquare, Menu, Sun, Moon, X, User, Settings, LogOut } from "lucide-react"
+import { Search, Home, MessageCircle, Heart, PlusSquare, Menu, User, Settings, LogOut } from "lucide-react"
 import { signIn, signOut, useSession } from "next-auth/react"
 import Link from "next/link"
 import { useSearch } from "@/context/SearchContext"
 
 export default function Navbar() {
 
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const user = session?.user;
 
   const { setQuery } = useSearch()

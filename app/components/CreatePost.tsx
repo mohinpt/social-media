@@ -9,6 +9,23 @@ import { ImageIcon, Video, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import ImageKit from "imagekit-javascript";
 import { apiClient } from "@/lib/api-client";
+import Image from "next/image";
+
+type ImageKitAuth = {
+  signature: string;
+  token: string;
+  expire: number;
+};
+
+export type UploadResult = {
+  url: string;
+  fileId: string;
+  name: string;
+  fileType: string;
+  height?: number;
+  width?: number;
+};
+
 
 export default function CreatePost() {
   const { data: session, status } = useSession();
@@ -21,7 +38,7 @@ export default function CreatePost() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [auth, setAuth] = useState<any>(null);
+  const [auth, setAuth] = useState<ImageKitAuth | null>(null);
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
@@ -96,7 +113,7 @@ export default function CreatePost() {
         });
 
         const file = selectedImage || selectedVideo!;
-        const uploadResult = await new Promise<any>((resolve, reject) => {
+        const uploadResult = await new Promise<UploadResult>((resolve, reject) => {
           imagekit.upload(
             {
               file,
@@ -167,10 +184,12 @@ export default function CreatePost() {
               <div className="mt-3 relative">
                 {imagePreview && (
                   <div className="relative rounded-lg overflow-hidden">
-                    <img
+                    <Image
                       src={imagePreview}
                       alt="Preview"
-                      className="w-full h-64 object-cover"
+                      width={800}
+                      height={600}
+                      className="object-cover"
                     />
                     <Button
                       variant="secondary"
@@ -249,6 +268,19 @@ export default function CreatePost() {
             </div>
           </div>
         </div>
+
+        {/* Status messages */}
+        {error && (
+          <div className="mt-3 p-2 text-sm rounded-md bg-red-100 text-red-700 border border-red-300">
+            {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="mt-3 p-2 text-sm rounded-md bg-green-100 text-green-700 border border-green-300">
+            Post created successfully!
+          </div>
+        )}
       </CardContent>
     </Card>
   )

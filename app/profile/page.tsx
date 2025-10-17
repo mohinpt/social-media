@@ -16,6 +16,7 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import ImageKit from "imagekit-javascript";
 import Link from "next/link";
+import { UploadResult } from "../components/CreatePost";
 
 const Profile = () => {
   const { data: session } = useSession();
@@ -80,7 +81,7 @@ const Profile = () => {
           urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
         });
 
-        const uploadResult: any = await new Promise((resolve, reject) => {
+        const uploadResult: UploadResult = await new Promise((resolve, reject) => {
           imagekit.upload(
             {
               file: profilePicture,

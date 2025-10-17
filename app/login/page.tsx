@@ -40,7 +40,7 @@ const Login = () => {
     };
 
     return (
-        <Card className="w-full max-w-sm mx-auto">
+        <Card className="w-full max-w-sm mx-auto mt-20">
             <CardHeader>
                 <CardTitle>Login to your account</CardTitle>
             </CardHeader>
@@ -84,7 +84,7 @@ const Login = () => {
                 </form>
             </CardContent>
             <CardFooter className="flex-col gap-2">
-                <p className="mt-4">Don't Have an account <Link href={"/register"} className="text-blue-500">click here</Link></p>
+                <p className="mt-4">Don&apos;t Have an account <Link href={"/register"} className="text-blue-500">click here</Link></p>
             </CardFooter>
         </Card>
     )

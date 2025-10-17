@@ -1,16 +1,22 @@
 
 import { IPost } from "@/models/post";
 
-type FetchOptions = {
+// type FetchOptions = {
+//     method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
+//     body?: any,
+//     headers?: Record<string, string>
+// }
+
+type FetchOptions<TBody = unknown> = {
     method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
-    body?: any,
+    body?: TBody,
     headers?: Record<string, string>
 }
 
 class ApiClient {
-    private async fetch<T>(
+    private async fetch<T, TBody = unknown>(
         endpoint: string,
-        options: FetchOptions = {}
+        options: FetchOptions<TBody> = {}
     ): Promise<T> {
         const { method = "GET", body, headers = {} } = options
 
@@ -32,7 +38,7 @@ class ApiClient {
 
         return response.json();
     }
-    
+
     async getPosts() {
         return this.fetch<IPost[]>("/posts");
     }
@@ -43,7 +49,7 @@ class ApiClient {
         return this.fetch<IPost[]>(`/posts/search?q=${encoded}`);
     }
 
-    async createPost(postData: { content: string; username: string;  media?: { type: 'image' | 'video'; url: string } }) {
+    async createPost(postData: { content: string; username: string; media?: { type: 'image' | 'video'; url: string } }) {
         return this.fetch("/posts", {
             method: "POST",
             body: postData,
@@ -57,7 +63,7 @@ class ApiClient {
         })
     }
 
-    async deletePost(id: string){
+    async deletePost(id: string) {
         return this.fetch(`/posts/${id}`, {
             method: "DELETE",
         })

@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "./ui/button"
 import { Card, CardContent } from "./ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Avatar, AvatarFallback } from "./ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog"
 import { Textarea } from "./ui/textarea"
 import { Heart, MessageCircle, Repeat2, Share, MoreHorizontal, Edit, Trash2, Flag, Link } from "lucide-react"
 import Image from "next/image"
@@ -31,7 +31,7 @@ interface PostProps {
 }
 
 export function Post({ id, username, content, media, timeStamp, likes, comments, shares, onUpdate, onRemove }: PostProps) {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const user = session?.user;
 
   const [isLiked, setIsLiked] = useState(false)
