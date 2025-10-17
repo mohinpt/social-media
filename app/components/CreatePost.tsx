@@ -11,7 +11,7 @@ import ImageKit from "imagekit-javascript";
 import { apiClient } from "@/lib/api-client";
 import Image from "next/image";
 
-type ImageKitAuth = {
+export type ImageKitAuth = {
   signature: string;
   token: string;
   expire: number;
@@ -123,11 +123,25 @@ export default function CreatePost() {
               token: auth.token,
               expire: auth.expire,
             },
-            (err: Error | null, result: any) => {
-              if (err) reject(err);
-              else resolve(result);
-            }
-          );
+            // (err: Error | null, result) => {
+            //   if (err) reject(err);
+            //   else resolve(result);
+            // }
+          ).then(response => {
+            // Map ImageKit's response to our custom type
+            const result: UploadResult = {
+              url: response.url,
+              fileId: response.fileId,
+              name: response.name,
+              fileType: response.fileType,
+              height: response.height,
+              width: response.width
+            };
+            resolve(result);
+          })
+            .catch(err => {
+              reject(err);
+            });
         });
 
         media = {

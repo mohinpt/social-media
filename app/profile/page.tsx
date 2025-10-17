@@ -16,7 +16,7 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import ImageKit from "imagekit-javascript";
 import Link from "next/link";
-import { UploadResult } from "../components/CreatePost";
+import { ImageKitAuth, UploadResult } from "../components/CreatePost";
 
 const Profile = () => {
   const { data: session } = useSession();
@@ -24,7 +24,7 @@ const Profile = () => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [auth, setAuth] = useState<any>(null);
+  const [auth, setAuth] = useState<ImageKitAuth | null>(null);
 
   const user = session?.user;
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -91,11 +91,25 @@ const Profile = () => {
               token: auth.token,
               expire: auth.expire,
             },
-            (err: Error | null, result: any) => {
-              if (err) reject(err);
-              else resolve(result);
-            }
-          );
+            // (err: Error | null, result: an) => {
+            //   if (err) reject(err);
+            //   else resolve(result);
+            // }
+          ).then(response => {
+            // Map ImageKit's response to our custom type
+            const result: UploadResult = {
+              url: response.url,
+              fileId: response.fileId,
+              name: response.name,
+              fileType: response.fileType,
+              height: response.height,
+              width: response.width
+            };
+            resolve(result);
+          })
+            .catch(err => {
+              reject(err);
+            });
         });
 
         avatarUrl = uploadResult.url;

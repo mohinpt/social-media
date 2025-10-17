@@ -24,7 +24,7 @@ export default function Navbar() {
       setQuery(search)
     }, 400)
     return () => clearTimeout(debounce)
-  }, [search])
+  }, [search, setQuery])
 
 
   return (
@@ -77,7 +77,7 @@ export default function Navbar() {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="w-8 h-8">
                       <AvatarImage src={user.avatar} />
-                      <AvatarFallback>{user.username.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                      <AvatarFallback>{user.username.split(' ').map((n:string) => n[0]).join('')}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
