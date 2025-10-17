@@ -1,8 +1,5 @@
-import { IImage } from "@/models/image";
-import { IPost } from "@/models/post";
-import { IVideo } from "@/models/video"
 
-export type VideoFormData = Omit<IVideo, "_id">;
+import { IPost } from "@/models/post";
 
 type FetchOptions = {
     method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
@@ -35,60 +32,7 @@ class ApiClient {
 
         return response.json();
     }
-
-    async getVideos() {
-        return this.fetch<IVideo[]>("/videos");
-    }
-
-    async getAVideo(id: string) {
-        return this.fetch<IVideo>(`/videos/${id}`)
-    }
-
-    async createVideo(videoData: VideoFormData) {
-        return this.fetch("/videos", {
-            method: "POST",
-            body: videoData,
-        })
-    }
-
-    async updateVideo(id: string, updates: { title?: string, description: string }) {
-        return this.fetch("/videos", {
-            method: "PATCH",
-            body: { id, ...updates }
-        })
-    }
-
-    async deleteVideo(id: string) {
-        return this.fetch("/videos", {
-            method: "DELETE",
-            body: { id }
-        })
-    }
-
-    async getImages() {
-        return this.fetch<IImage[]>("/images")
-    }
-
-    async getAnImage(id: string) {
-        return this.fetch<IImage>(`/images/${id}`)
-    }
-
-    async createImage(data: IImage) {
-        return this.fetch("/images", {
-            method: "POST",
-            body: data
-        }
-        )
-    }
-
-    async updateImage(id: string, updates: { title?: string, description?: string, imageUrl?: string }) {
-        return this.fetch("/images", {
-            method: "PUT",
-            body: { id, ...updates }
-        })
-    }
-
-    // Add this to your existing ApiClient class
+    
     async getPosts() {
         return this.fetch<IPost[]>("/posts");
     }
